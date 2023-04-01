@@ -24,3 +24,36 @@ export const SearchMovies = async value => {
     console.log(error);
   }
 };
+
+export const getDetailsMovies = async id => {
+  try {
+    const resp = await axios.get(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+    );
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMovieCredits = async id => {
+  try {
+    const resp = await axios.get(
+      `${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`
+    );
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMovieReviews = async id => {
+  try {
+    const resp = await axios.get(
+      `${BASE_URL}/movie/${id}/reviews?api_key=${API_KEY}`
+    );
+    return resp.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

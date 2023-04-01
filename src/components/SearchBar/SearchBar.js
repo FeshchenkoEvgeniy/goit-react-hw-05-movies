@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
 export function SearchBar({ onSubmit }) {
-  const [searchData, setSearchData] = useState('');
+  const [query, setQuery] = useState('');
 
   const handleChange = e => {
-    const { value } = e.currentTarget;
-    setSearchData(value.toLowerCase());
+    setQuery(e.currentTarget.value.toLowerCase());
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (searchData.trim() === '') {
-      alert('Enter value');
+    if (query.trim() === '') {
+      alert('enter value');
       return;
     }
-    onSubmit(searchData);
-    setSearchData('');
+
+    onSubmit(query);
+    setQuery('');
   };
 
   return (
@@ -30,7 +30,7 @@ export function SearchBar({ onSubmit }) {
         autoComplete="off"
         autoFocus
         placeholder="Search movies"
-        value={searchData}
+        value={query}
         onChange={handleChange}
       />
     </form>

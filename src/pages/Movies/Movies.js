@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { SearchMovies } from 'api';
@@ -5,31 +6,38 @@ import { MovieList } from 'components/MovieList/MovieList';
 import { Loader } from 'components/Loader/Loader';
 
 const Movies = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const nameMovie = searchParams.get('query') ?? '';
+
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  console.log(movies);
-
-  const onSubmit = value => {
-    setSearchValue(value);
-  };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    SearchMovies(searchValue)
-      .then(response => setMovies(response.results))
-      .catch(error => console.log(error))
+    setMovies([]);
+    setLoading(true);
+
+    SearchMovies(nameMovie)
+      .then(resp => {
+        setMovies(resp.results);
+      })
+      .catch(error => setError(error))
       .finally(() => {
-        setIsLoading(false);
+        setLoading(false);
       });
-  }, [searchValue]);
+  }, [nameMovie]);
+
+  const handleSubmit = query => {
+    const nextParams = query !== '' ? { query } : {};
+    setSearchParams(nextParams);
+  };
 
   return (
     <>
-      <SearchBar onSubmit={onSubmit} />
-      <MovieList movies={movies} />
-      {isLoading && <Loader />}
+    {error && <h2>{error.message}</h2>}
+      <SearchBar onSubmit={handleSubmit} />
+      {movies.length > 0 && <MovieList movies={movies} />}
+      {loading && <Loader />}
     </>
   );
 };
