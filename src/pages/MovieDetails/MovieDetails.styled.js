@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-    position: relative;
-    display: flex;
-    gap: 50px;
-  `
-  
+export const MovieDetailsList = styled.div`
+display: flex;
+margin: 24px;
+gap: 24px;
+`;
+

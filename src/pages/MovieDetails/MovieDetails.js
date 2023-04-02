@@ -3,7 +3,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { getDetailsMovies } from 'api';
 import { BackLink } from 'components/BackLink/BackLink';
 import { Loader } from 'components/Loader/Loader';
-import { Wrapper } from '../MovieDetails/MovieDetails.styled';
+import { MovieDetailsList } from '../MovieDetails/MovieDetails.styled';
 const MovieDetails = () => {
   const [detailMovies, setDetailMovies] = useState([]);
   const { movieId } = useParams();
@@ -28,7 +28,7 @@ const MovieDetails = () => {
   return (
     <main>
       <BackLink to={backLinkHref} />
-      <Wrapper>
+      <MovieDetailsList>
         <img
           src={
             poster_path
@@ -38,25 +38,21 @@ const MovieDetails = () => {
           alt="movie"
           width="250px"
         />
+        <div>
         <h2>{title}</h2>
-        </Wrapper>
-        <div>
         <p>User score: {vote_average.toFixed(1)}</p>
-        <div>
           <h3>Overview</h3>
           <p>{overview}</p>
-          <div>
+  
             <h3>Genres</h3>
             <ul>
               {genres.map(({ id, name }) => (
                 <li key={id}>{name}</li>
               ))}
             </ul>
-          </div>
-          </div>
-        </div>
-        <h2>Additional information</h2>
-        <div>
+            </div>
+        </MovieDetailsList>
+        <h2>Additional information</h2>  
         <ul>
           <li>
             <Link to="cast" state={{ ...location.state }}>
@@ -69,7 +65,6 @@ const MovieDetails = () => {
             </Link>
           </li>
         </ul>
-        </div>
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
