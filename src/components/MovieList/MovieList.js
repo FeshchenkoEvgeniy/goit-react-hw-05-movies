@@ -1,4 +1,4 @@
-import { Link, useLocation, Outlet } from 'react-router-dom';
+import { useLocation, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from 'components/Loader/Loader';

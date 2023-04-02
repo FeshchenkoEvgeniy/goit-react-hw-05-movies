@@ -1,4 +1,5 @@
 import { getMovieReviews } from 'api';
+import { P, ListItem } from '../Reviews/Reviews.styled';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -9,20 +10,22 @@ const Reviews = () => {
     getMovieReviews(movieId)
       .then(response => setReviews(response.results))
       .catch(error => console.log(error));
-  }, []);
-  
+  }, [movieId]);
+
   return (
     <section>
-    {reviews.length < 0 ? <ul>
-        {reviews.map(({ id, author, content }) => (
-          <li key={id}>
-            <h2>{author}</h2>
-            <p>{content}</p>
-          </li>
-        ))}
-      </ul>
-      : <h2>not reviews</h2>
-    }
+      {reviews.length <= 0 ? (
+        <h2>We don't have any revies for the movie.</h2>
+      ) : (
+        <ul>
+          {reviews.map(({ id, author, content }) => (
+            <ListItem key={id}>
+              <h3>Author: {author}</h3>
+              <P>{content}</P>
+            </ListItem>
+          ))}
+        </ul>
+      )}
     </section>
   );
 };

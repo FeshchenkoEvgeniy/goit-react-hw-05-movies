@@ -1,9 +1,18 @@
-import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
+import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { useEffect, useState, Suspense } from 'react';
 import { getDetailsMovies } from 'api';
 import { BackLink } from 'components/BackLink/BackLink';
 import { Loader } from 'components/Loader/Loader';
-import { MovieDetailsList } from '../MovieDetails/MovieDetails.styled';
+import {
+  MovieDetailsList,
+  GenreList,
+  GenreListItem,
+  P,
+  List,
+  ListItem,
+  StyledLink,
+  AdditionalDiv,
+} from '../MovieDetails/MovieDetails.styled';
 const MovieDetails = () => {
   const [detailMovies, setDetailMovies] = useState([]);
   const { movieId } = useParams();
@@ -11,7 +20,7 @@ const MovieDetails = () => {
   const location = useLocation();
 
   const backLinkHref = location.state?.from ?? '/movie';
-  
+
   useEffect(() => {
     getDetailsMovies(movieId)
       .then(response => setDetailMovies(response))
@@ -39,35 +48,36 @@ const MovieDetails = () => {
           width="250px"
         />
         <div>
-        <h2>{title}</h2>
-        <p>User score: {vote_average.toFixed(1)}</p>
+          <h2>{title}</h2>
+          <P>User score: {vote_average.toFixed(1)}</P>
           <h3>Overview</h3>
-          <p>{overview}</p>
-  
-            <h3>Genres</h3>
-            <ul>
-              {genres.map(({ id, name }) => (
-                <li key={id}>{name}</li>
-              ))}
-            </ul>
-            </div>
-        </MovieDetailsList>
-        <h2>Additional information</h2>  
-        <ul>
-          <li>
-            <Link to="cast" state={{ ...location.state }}>
+          <P>{overview}</P>
+          <h3>Genres</h3>
+          <GenreList>
+            {genres.map(({ id, name }) => (
+              <GenreListItem key={id}>{name}</GenreListItem>
+            ))}
+          </GenreList>
+        </div>
+      </MovieDetailsList>
+      <AdditionalDiv>
+        <h2>Additional information</h2>
+        <List>
+          <ListItem>
+            <StyledLink to="cast" state={{ ...location.state }}>
               Cast
-            </Link>
-          </li>
-          <li>
-            <Link to="reviews" state={{ ...location.state }}>
+            </StyledLink>
+          </ListItem>
+          <ListItem>
+            <StyledLink to="reviews" state={{ ...location.state }}>
               Reviews
-            </Link>
-          </li>
-        </ul>
+            </StyledLink>
+          </ListItem>
+        </List>
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
+      </AdditionalDiv>
     </main>
   );
 };
