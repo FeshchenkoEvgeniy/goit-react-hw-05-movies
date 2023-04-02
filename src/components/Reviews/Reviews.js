@@ -13,7 +13,7 @@ const Reviews = () => {
   
   return (
     <section>
-      <ul>
+    {reviews.length < 0 ? <ul>
         {reviews.map(({ id, author, content }) => (
           <li key={id}>
             <h2>{author}</h2>
@@ -21,6 +21,8 @@ const Reviews = () => {
           </li>
         ))}
       </ul>
+      : <h2>not reviews</h2>
+    }
     </section>
   );
 };

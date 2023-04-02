@@ -2,18 +2,21 @@ import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { useEffect, useState, Suspense } from 'react';
 import { getDetailsMovies } from 'api';
 import { BackLink } from 'components/BackLink/BackLink';
+import { Loader } from 'components/Loader/Loader';
 
 const MovieDetails = () => {
   const [detailMovies, setDetailMovies] = useState([]);
   const { movieId } = useParams();
-  const location = useLocation;
-  const backLinkHref = location.state?.from ?? '/movies';
-  console.log(backLinkHref)
+
+  const location = useLocation();
+
+  const backLinkHref = location.state?.from ?? '/movie';
+  
   useEffect(() => {
     getDetailsMovies(movieId)
       .then(response => setDetailMovies(response))
       .catch(error => console.log(error));
-  }, []);
+  }, [movieId]);
 
   const {
     poster_path,
@@ -62,7 +65,9 @@ const MovieDetails = () => {
             </Link>
           </li>
         </ul>
-        <Outlet />
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
       </div>
     </main>
   );

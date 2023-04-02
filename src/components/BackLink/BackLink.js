@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { HiArrowLeft } from "react-icons/hi";
 export const BackLink = ({ to, children }) => {
-    console.log(to)
     return (
       <Link to={to}>
-        <button>return</button>
+        <HiArrowLeft size="24" />
+      Back to Movies
       </Link>
     );
   };

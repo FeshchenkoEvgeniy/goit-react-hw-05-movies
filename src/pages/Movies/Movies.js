@@ -8,7 +8,6 @@ import { Loader } from 'components/Loader/Loader';
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const nameMovie = searchParams.get('query') ?? '';
-
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -33,12 +32,12 @@ const Movies = () => {
   };
 
   return (
-    <>
+    <main>
     {error && <h2>{error.message}</h2>}
       <SearchBar onSubmit={handleSubmit} />
-      {movies.length > 0 && <MovieList movies={movies} />}
+      {movies.length > 0 && <MovieList movies={movies} /> }
       {loading && <Loader />}
-    </>
+    </main>
   );
 };
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Input, Form, Label, Button, Div } from './SearchBar.styled';
 
 export function SearchBar({ onSubmit }) {
   const [query, setQuery] = useState('');
@@ -20,19 +21,21 @@ export function SearchBar({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <button type="submit">
-        <span>Search</span>
-      </button>
+    <Div>
+      <Form onSubmit={handleSubmit}>
+        <Button type="submit">
+          <Label>Search</Label>
+        </Button>
 
-      <input
-        type="text"
-        autoComplete="off"
-        autoFocus
-        placeholder="Search movies"
-        value={query}
-        onChange={handleChange}
-      />
-    </form>
+        <Input
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search movies"
+          value={query}
+          onChange={handleChange}
+        />
+      </Form>
+    </Div>
   );
 }

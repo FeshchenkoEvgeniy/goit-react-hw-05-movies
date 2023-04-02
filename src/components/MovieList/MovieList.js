@@ -1,32 +1,31 @@
-import { Link, useLocation, Outlet } from "react-router-dom";
+import { Link, useLocation, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import PropTypes from 'prop-types';
-import {Loader} from 'components/Loader/Loader';
+import { Loader } from 'components/Loader/Loader';
+import { List, ListItemImage, ListItem, StyledLink } from './MovieList.styled';
 
 export const MovieList = ({ movies }) => {
-
   const location = useLocation();
 
   return (
     <div>
-      <ul>
+      <List>
         {movies.map(({ id, title, poster_path }) => (
-          <li key={id}>
-            <Link to={`/movies/${id}`} state={{ from: location }}>
-            <img
-              src={
-                poster_path
-                  ? `https://image.tmdb.org/t/p/w500/${poster_path}`
-                  : 'https://via.placeholder.com/250x375'
-              }
-              alt="movie"
-              width="250px"
-            />
-            <p>{title}</p>
-            </Link>
-          </li>
+          <ListItem key={id}>
+            <StyledLink to={`/movies/${id}`} state={{ from: location }}>
+              <ListItemImage
+                src={
+                  poster_path
+                    ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+                    : 'https://via.placeholder.com/250x375'
+                }
+                alt="movie"
+              />
+              <p>{title}</p>
+            </StyledLink>
+          </ListItem>
         ))}
-      </ul>
+      </List>
       <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>

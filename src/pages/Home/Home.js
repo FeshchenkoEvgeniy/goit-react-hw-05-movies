@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { TrendingMovies } from 'api';
 import { Loader } from 'components/Loader/Loader';
 import { MovieList } from 'components/MovieList/MovieList';
-
+import { Header } from './Home.styled';
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <main>
-      <h1>Trending today</h1>
+      <Header>Trending today</Header>
       <MovieList movies={movies} />
       {isLoading && <Loader />}
     </main>
