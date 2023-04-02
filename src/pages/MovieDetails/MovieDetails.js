@@ -3,7 +3,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { getDetailsMovies } from 'api';
 import { BackLink } from 'components/BackLink/BackLink';
 import { Loader } from 'components/Loader/Loader';
-
+import { Wrapper } from '../MovieDetails/MovieDetails.styled';
 const MovieDetails = () => {
   const [detailMovies, setDetailMovies] = useState([]);
   const { movieId } = useParams();
@@ -27,8 +27,8 @@ const MovieDetails = () => {
   } = detailMovies;
   return (
     <main>
-      <div>
-        <BackLink to={backLinkHref} />
+      <BackLink to={backLinkHref} />
+      <Wrapper>
         <img
           src={
             poster_path
@@ -39,6 +39,8 @@ const MovieDetails = () => {
           width="250px"
         />
         <h2>{title}</h2>
+        </Wrapper>
+        <div>
         <p>User score: {vote_average.toFixed(1)}</p>
         <div>
           <h3>Overview</h3>
@@ -51,8 +53,10 @@ const MovieDetails = () => {
               ))}
             </ul>
           </div>
+          </div>
         </div>
         <h2>Additional information</h2>
+        <div>
         <ul>
           <li>
             <Link to="cast" state={{ ...location.state }}>
@@ -65,10 +69,10 @@ const MovieDetails = () => {
             </Link>
           </li>
         </ul>
+        </div>
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
-      </div>
     </main>
   );
 };
